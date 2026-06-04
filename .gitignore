@@ -1,0 +1,22 @@
+# Python / Virtual Environment
+venv/
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Data
+data/
+*.npy
+
+# Model Weights
+*.pth
+
+# Generated Outputs
+*.gif
+
+# MacOS
+.DS_Store
+
+# IDEs / Editors
+.vscode/
+.idea/
