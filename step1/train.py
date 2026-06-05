@@ -7,6 +7,8 @@ from torch.utils.data import DataLoader
 from dataset import MovingMNISTDataset
 from model import Autoencoder, LatentDynamicsModel
 
+_DIR = os.path.dirname(os.path.abspath(__file__))
+
 def get_device():
     if torch.backends.mps.is_available():
         return torch.device("mps")
@@ -110,8 +112,8 @@ if __name__ == "__main__":
     dyn = LatentDynamicsModel(latent_dim=128, hidden_dim=256)
     
     # 3. Train
-    ae_path = 'ae_weights.pth'
-    dyn_path = 'dyn_weights.pth'
+    ae_path = os.path.join(_DIR, 'ae_weights.pth')
+    dyn_path = os.path.join(_DIR, 'dyn_weights.pth')
     
     # Always train (overwrites existing weights)
     train_autoencoder(ae, dataloader, device, epochs=args.ae_epochs, save_path=ae_path)

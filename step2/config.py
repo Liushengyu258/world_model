@@ -1,6 +1,9 @@
 """全局配置"""
 
+import os
 from dataclasses import dataclass, field
+
+_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
 @dataclass
@@ -27,6 +30,6 @@ class TrainConfig:
     tf_decay_ratio: float = 0.5         # teacher forcing 衰减到 0 的进度
 
     # ── 输出 ─────────────────────────────────
-    vae_weights: str = "vae_weights.pth"
-    dyn_weights: str = "dyn_weights.pth"
-    gif_path: str = "world_model_dream.gif"
+    vae_weights: str = os.path.join(_DIR, "vae_weights.pth")
+    dyn_weights: str = os.path.join(_DIR, "dyn_weights.pth")
+    gif_path: str = os.path.join(_DIR, "world_model_dream.gif")

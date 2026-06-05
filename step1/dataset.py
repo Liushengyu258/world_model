@@ -4,8 +4,10 @@ import numpy as np
 import torch
 from torch.utils.data import Dataset, DataLoader
 
+_DIR = os.path.dirname(os.path.abspath(__file__))
+
 class MovingMNISTDataset(Dataset):
-    def __init__(self, root='./data', download=True, train=True):
+    def __init__(self, root=os.path.join(_DIR, 'data'), download=True, train=True):
         self.root = root
         self.file_path = os.path.join(root, 'mnist_test_seq.npy')
         

@@ -8,7 +8,9 @@ from torch.utils.data import DataLoader
 from model import Autoencoder, LatentDynamicsModel
 from train import get_device
 
-def generate_gif(ae, dyn, dataloader, device, num_prompt_frames=5, total_frames=20, save_path="world_model_dream.gif"):
+_DIR = os.path.dirname(os.path.abspath(__file__))
+
+def generate_gif(ae, dyn, dataloader, device, num_prompt_frames=5, total_frames=20, save_path=os.path.join(_DIR, "world_model_dream.gif")):
     print("Generating predictions...")
     ae.to(device)
     dyn.to(device)
@@ -101,8 +103,8 @@ if __name__ == "__main__":
     ae = Autoencoder(latent_dim=128)
     dyn = LatentDynamicsModel(latent_dim=128, hidden_dim=256)
     
-    ae_path = 'ae_weights.pth'
-    dyn_path = 'dyn_weights.pth'
+    ae_path = os.path.join(_DIR, 'ae_weights.pth')
+    dyn_path = os.path.join(_DIR, 'dyn_weights.pth')
     
     if not os.path.exists(ae_path) or not os.path.exists(dyn_path):
         print("Model weights not found! Please run train.py first.")
