@@ -93,8 +93,8 @@ def train_dynamics(ae, dyn, dataloader, device, epochs=50, lr=1e-3, save_path='d
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--batch_size', type=int, default=64)
-    parser.add_argument('--ae_epochs', type=int, default=20)
-    parser.add_argument('--dyn_epochs', type=int, default=50)
+    parser.add_argument('--ae_epochs', type=int, default=50)
+    parser.add_argument('--dyn_epochs', type=int, default=200)
     args = parser.parse_args()
 
     device = get_device()
@@ -113,17 +113,8 @@ if __name__ == "__main__":
     ae_path = 'ae_weights.pth'
     dyn_path = 'dyn_weights.pth'
     
-    # Check if AE is already trained to save time in re-runs
-    if os.path.exists(ae_path):
-        print("Found existing AE weights, loading...")
-        ae.load_state_dict(torch.load(ae_path, map_location=device, weights_only=True))
-    else:
-        train_autoencoder(ae, dataloader, device, epochs=args.ae_epochs, save_path=ae_path)
-        
-    if os.path.exists(dyn_path):
-        print("Found existing Dynamics weights, loading...")
-        dyn.load_state_dict(torch.load(dyn_path, map_location=device, weights_only=True))
-    else:
-        train_dynamics(ae, dyn, dataloader, device, epochs=args.dyn_epochs, save_path=dyn_path)
+    # Always train (overwrites existing weights)
+    train_autoencoder(ae, dataloader, device, epochs=args.ae_epochs, save_path=ae_path)
+    train_dynamics(ae, dyn, dataloader, device, epochs=args.dyn_epochs, save_path=dyn_path)
         
     print("Training finished! You can now run inference.py to see the model 'dream'.")
